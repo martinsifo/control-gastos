@@ -36,10 +36,14 @@ function App() {
   }, [gastoEditar]);
 
   useEffect(() => {
+    //Cuando se modifica el prepuesto, se guarda en el local storage para persistirlo cuando actualizamos la pagina
+
     localStorage.setItem("presupuesto", presupuesto ?? 0);
   }, [presupuesto]);
 
   useEffect(() => {
+    //Cuando se agrega o elimina un gasto, se guarda en el local storage para persistirlo cuando actualizamos la pagina
+
     localStorage.setItem("gastos", JSON.stringify(gastos) ?? []);
   }, [gastos]);
 
@@ -70,6 +74,10 @@ function App() {
     }, 500);
   };
 
+  const filtrarCategoria = (gasto) => {
+    return gastosFiltrados.filter((g) => g.id !== gasto.id);
+  };
+
   const guardarGasto = (gasto) => {
     if (gasto.id) {
       //Actualizar
@@ -80,11 +88,11 @@ function App() {
       setGastos(gastosActualizados);
 
       if (filtro && gasto.categoria === filtro) {
-        setGastosFiltrados([...gastosFiltrados, gasto]);
+        const categoriaFiltrada = filtrarCategoria(gasto);
+
+        setGastosFiltrados([...categoriaFiltrada, gasto]);
       } else {
-        const categoriaFiltrada = gastosFiltrados.filter(
-          (g) => g.id !== gasto.id
-        );
+        const categoriaFiltrada = filtrarCategoria(gasto);
 
         setGastosFiltrados(categoriaFiltrada);
       }
