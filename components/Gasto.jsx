@@ -1,22 +1,22 @@
-import React from 'react'
+import React from "react";
 import {
   LeadingActions,
   SwipeableList,
   SwipeableListItem,
   SwipeAction,
-  TrailingActions
-} from 'react-swipeable-list'
-import 'react-swipeable-list/dist/styles.css'
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
-import {formatearFecha} from '../src/helpers'
+import { formatearFecha } from "../src/helpers";
 
-import IconoAhorro from '../src/img/icono_ahorro.svg'
-import IconoCasa from '../src/img/icono_casa.svg'
-import IconoComida from '../src/img/icono_comida.svg'
-import IconoGastos from '../src/img/icono_gastos.svg'
-import IconoOcio from '../src/img/icono_ocio.svg'
-import IconoSalud from '../src/img/icono_salud.svg'
-import IconoSuscripciones from '../src/img/icono_suscripciones.svg'
+import IconoAhorro from "../src/img/icono_ahorro.svg";
+import IconoCasa from "../src/img/icono_casa.svg";
+import IconoComida from "../src/img/icono_comida.svg";
+import IconoGastos from "../src/img/icono_gastos.svg";
+import IconoOcio from "../src/img/icono_ocio.svg";
+import IconoSalud from "../src/img/icono_salud.svg";
+import IconoSuscripciones from "../src/img/icono_suscripciones.svg";
 
 const diccionarioIconos = {
   ahorro: IconoAhorro,
@@ -25,30 +25,25 @@ const diccionarioIconos = {
   gastos: IconoGastos,
   ocio: IconoOcio,
   salud: IconoSalud,
-  suscripciones: IconoSuscripciones
-}
+  suscripciones: IconoSuscripciones,
+};
 
-const Gasto = ({gasto, setGastoEditar, eliminarGasto}) => {
-  const {categoria, nombre, cantidad, id, fecha} = gasto;
+const Gasto = ({ gasto, setGastoEditar, eliminarGasto }) => {
+  const { categoria, nombre, cantidad, id, fecha } = gasto;
 
   const leadingActions = () => (
     <LeadingActions>
-      <SwipeAction onClick={() => setGastoEditar(gasto)}>
-        Editar
-      </SwipeAction>
+      <SwipeAction onClick={() => setGastoEditar(gasto)}>Editar</SwipeAction>
     </LeadingActions>
-  )
+  );
 
   const trailingActions = () => (
     <TrailingActions>
-      <SwipeAction 
-        onClick={() => eliminarGasto(id)}
-        destructive={true}
-      >
+      <SwipeAction onClick={() => eliminarGasto(id)} destructive={true}>
         Eliminar
       </SwipeAction>
-  </TrailingActions>
-  )
+    </TrailingActions>
+  );
 
   return (
     <SwipeableList>
@@ -56,25 +51,24 @@ const Gasto = ({gasto, setGastoEditar, eliminarGasto}) => {
         leadingActions={leadingActions()}
         trailingActions={trailingActions()}
       >
-        <div className='gasto sombra'>
-          <div className='contenido-gasto'>
-            <img
-              src={diccionarioIconos[categoria]}
-              alt='Icono Gasto'
-            />
-            <div className='descripcion-gasto'>
-              <p className='categoria'>{categoria}</p>
-              <p className='nombre-gasto'>{nombre}</p>
-              <p className='fecha-gasto'></p>
-                Agregado el: {''}
-                <span>{formatearFecha(fecha)}</span>
-             </div>
+        <div className="gasto sombra">
+          <div className="contenido-gasto">
+            <img src={diccionarioIconos[categoria]} alt="Icono Gasto" />
+            <div className="descripcion-gasto">
+              <p className="categoria">{categoria}</p>
+              <p className="nombre-gasto">{nombre}</p>
+              <p className="fecha-gasto"></p>
+              Agregado el: {""}
+              <span>{formatearFecha(fecha)}</span>
+            </div>
           </div>
-            <p className='cantidad-gasto'>${cantidad}</p>
+          <p className="cantidad-gasto">
+            {cantidad > 0 ? `$${cantidad}` : "Gratis"}
+          </p>
         </div>
       </SwipeableListItem>
     </SwipeableList>
-  )
-}
+  );
+};
 
-export default Gasto
+export default Gasto;
