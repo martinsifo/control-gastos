@@ -78,34 +78,40 @@ function App() {
     return gastosFiltrados.filter((g) => g.id !== gasto.id);
   };
 
-  const guardarGasto = (gasto) => {
-    if (gasto.id) {
-      //Actualizar
-      const gastosActualizados = gastos.map((gastoState) =>
-        gastoState.id === gasto.id ? gasto : gastoState
-      );
+  const crearGasto = (gasto) => {
+    //Nuevo Gasto
+    gasto.id = generarId();
+    gasto.fecha = Date.now();
 
-      setGastos(gastosActualizados);
+    setGastos([...gastos, gasto]);
 
-      if (filtro && gasto.categoria === filtro) {
-        const categoriaFiltrada = filtrarCategoria(gasto);
+    if (filtro && gasto.categoria === filtro) {
+      setGastosFiltrados([...gastosFiltrados, gasto]);
+    }
+  };
 
-        setGastosFiltrados([...categoriaFiltrada, gasto]);
-      } else {
-        const categoriaFiltrada = filtrarCategoria(gasto);
+  const actualizarGasto = (gasto) => {
+    const gastosActualizados = gastos.map((gastoState) =>
+      gastoState.id === gasto.id ? gasto : gastoState
+    );
 
-        setGastosFiltrados(categoriaFiltrada);
-      }
+    setGastos(gastosActualizados);
+    const categoriaFiltrada = filtrarCategoria(gasto);
+
+    if (filtro && gasto.categoria === filtro) {
+      setGastosFiltrados([...categoriaFiltrada, gasto]);
     } else {
-      //Nuevo Gasto
-      gasto.id = generarId();
-      gasto.fecha = Date.now();
+      setGastosFiltrados(categoriaFiltrada);
+    }
+  };
 
-      setGastos([...gastos, gasto]);
-
-      if (filtro && gasto.categoria === filtro) {
-        setGastosFiltrados([...gastosFiltrados, gasto]);
-      }
+  const handleGasto = (gasto) => {
+    if (gasto.id) {
+      //Actualizar gasto
+      actualizarGasto(gasto);
+    } else {
+      //Crea Gasto
+      crearGasto(gasto);
     }
 
     setAnimarModal(false);
@@ -165,7 +171,7 @@ function App() {
           setModal={setModal}
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
-          guardarGasto={guardarGasto}
+          handleGasto={handleGasto}
           gastoEditar={gastoEditar}
           setGastoEditar={setGastoEditar}
         />
