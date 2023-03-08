@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Mensaje from './Mensaje';
 import CerrarBtn from '../img/cerrar.svg';
 
-function Modal({ setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar }) {
+function Modal({ setModal, animarModal, setAnimarModal, handleGasto, gastoEditar, setGastoEditar }) {
   const [mensaje, setMensaje] = useState('');
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
@@ -40,7 +40,7 @@ function Modal({ setModal, animarModal, setAnimarModal, guardarGasto, gastoEdita
       return;
     }
 
-    guardarGasto({ nombre, cantidad, categoria, id, fecha });
+    handleGasto({ nombre, cantidad, categoria, id, fecha });
   };
 
   return (
