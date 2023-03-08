@@ -1,33 +1,19 @@
-import { useState, useEffect } from "react";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
+import { useState, useEffect } from 'react';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-function ControlPresupuesto({
-  presupuesto,
-  setPresupuesto,
-  gastos,
-  setGastos,
-  setGastosFiltrados,
-  setIsValidPresupuesto,
-  setFiltro,
-}) {
+function ControlPresupuesto({ presupuesto, setPresupuesto, gastos, setGastos, setGastosFiltrados, setIsValidPresupuesto, setFiltro }) {
   const [porcentaje, setPorcentaje] = useState(0);
   const [disponible, setDisponible] = useState(0);
   const [gastado, setGastado] = useState(0);
 
   useEffect(() => {
-    const totalGastado = gastos.reduce(
-      (total, gasto) => gasto.cantidad + total,
-      0
-    );
+    const totalGastado = gastos.reduce((total, gasto) => gasto.cantidad + total, 0);
 
     const totalDisponible = presupuesto - totalGastado;
 
     //Calcular el porcentaje gastado
-    const nuevoPorcentaje = (
-      ((presupuesto - totalDisponible) / presupuesto) *
-      100
-    ).toFixed(2);
+    const nuevoPorcentaje = (((presupuesto - totalDisponible) / presupuesto) * 100).toFixed(2);
 
     setDisponible(totalDisponible);
     setGastado(totalGastado);
@@ -37,20 +23,20 @@ function ControlPresupuesto({
   }, [gastos]);
 
   const formatearCantidad = (cantidad) => {
-    return cantidad.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
+    return cantidad.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD',
     });
   };
 
   const handleResetApp = () => {
-    const resultado = confirm("¿Deseas reiniciar presupuesto y gastos?");
+    const resultado = confirm('¿Deseas reiniciar presupuesto y gastos?');
     if (resultado) {
       setGastos([]);
       setGastosFiltrados([]);
       setPresupuesto(0);
       setIsValidPresupuesto(false);
-      setFiltro("");
+      setFiltro('');
     }
   };
 
@@ -59,9 +45,9 @@ function ControlPresupuesto({
       <div>
         <CircularProgressbar
           styles={buildStyles({
-            pathColor: porcentaje > 100 ? "#DC2626" : "#3B82F6",
-            trailColor: "#F5F5F5",
-            textColor: porcentaje > 100 ? "#DC2626" : "#3B82F6",
+            pathColor: porcentaje > 100 ? '#DC2626' : '#3B82F6',
+            trailColor: '#F5F5F5',
+            textColor: porcentaje > 100 ? '#DC2626' : '#3B82F6',
           })}
           value={porcentaje}
           text={`${porcentaje}% Gastado`}
@@ -77,7 +63,7 @@ function ControlPresupuesto({
           {formatearCantidad(presupuesto)}
         </p>
 
-        <p className={`${disponible < 0 ? "negativo" : ""}`}>
+        <p className={`${disponible < 0 ? 'negativo' : ''}`}>
           <span>Disponible: </span>
           {formatearCantidad(disponible)}
         </p>

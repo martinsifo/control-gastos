@@ -1,21 +1,14 @@
-import { useState, useEffect } from "react";
-import Mensaje from "./Mensaje";
-import CerrarBtn from "../src/img/cerrar.svg";
+import { useState, useEffect } from 'react';
+import Mensaje from './Mensaje';
+import CerrarBtn from '../img/cerrar.svg';
 
-function Modal({
-  setModal,
-  animarModal,
-  setAnimarModal,
-  handleGasto,
-  gastoEditar,
-  setGastoEditar,
-}) {
-  const [mensaje, setMensaje] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [cantidad, setCantidad] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [fecha, setFecha] = useState("");
-  const [id, setId] = useState("");
+function Modal({ setModal, animarModal, setAnimarModal, guardarGasto, gastoEditar, setGastoEditar }) {
+  const [mensaje, setMensaje] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [cantidad, setCantidad] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [fecha, setFecha] = useState('');
+  const [id, setId] = useState('');
 
   useEffect(() => {
     if (Object.keys(gastoEditar).length > 0) {
@@ -38,41 +31,30 @@ function Modal({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if ([nombre, cantidad, categoria].includes("")) {
-      setMensaje("Todos los campos son obligatorios");
+    if ([nombre, cantidad, categoria].includes('')) {
+      setMensaje('Todos los campos son obligatorios');
 
       setTimeout(() => {
-        setMensaje("");
+        setMensaje('');
       }, 3000);
       return;
     }
 
-    handleGasto({ nombre, cantidad, categoria, id, fecha });
+    guardarGasto({ nombre, cantidad, categoria, id, fecha });
   };
 
   return (
     <div className="modal">
-      <div className="cerrar-modal">
-        <img src={CerrarBtn} alt="cerrar modal" onClick={ocultarModal} />
+      <div className="cerrar-modal" onClick={ocultarModal}>
+        <img src={CerrarBtn} alt="cerrar modal" />
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className={`formulario ${animarModal ? "animar" : "cerrar"}`}
-      >
-        <legend>{gastoEditar.nombre ? "Editar Gasto" : "Nuevo Gasto"}</legend>
+      <form onSubmit={handleSubmit} className={`formulario ${animarModal ? 'animar' : 'cerrar'}`}>
+        <legend>{gastoEditar.nombre ? 'Editar Gasto' : 'Nuevo Gasto'}</legend>
         {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
-
         <div className="campo">
           <label htmlFor="nombre">Nombre Gasto</label>
-
-          <input
-            id="nombre"
-            type="text"
-            placeholder="Añade el nombre del Gasto"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-          />
+          <input id="nombre" type="text" placeholder="Añade el nombre del Gasto" value={nombre} onChange={(e) => setNombre(e.target.value)} />
         </div>
 
         <div className="campo">
@@ -81,7 +63,6 @@ function Modal({
           <input
             id="cantidad"
             type="number"
-            min={0}
             placeholder="Añade la cantidad del Gasto: ej. 300"
             value={cantidad}
             onChange={(e) => setCantidad(Number(e.target.value))}
@@ -91,11 +72,7 @@ function Modal({
         <div className="campo">
           <label htmlFor="categoria">Categoria</label>
 
-          <select
-            id="categoria"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
-          >
+          <select id="categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)}>
             <option value="">-- Todas las categorias --</option>
             <option value="ahorro">Ahorro</option>
             <option value="comida">Comida</option>
@@ -107,10 +84,7 @@ function Modal({
           </select>
         </div>
 
-        <input
-          type="submit"
-          value={gastoEditar.nombre ? "Guardar Cambios" : "Añadir Gasto"}
-        />
+        <input type="submit" value={gastoEditar.nombre ? 'Guardar Cambios' : 'Añadir Gasto'} />
       </form>
     </div>
   );
