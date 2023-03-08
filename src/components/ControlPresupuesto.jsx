@@ -42,7 +42,7 @@ function ControlPresupuesto({ presupuesto, setPresupuesto, gastos, setGastos, se
 
   return (
     <div className="contenedor-presupuesto contenedor sombra dos-columnas">
-      <div>
+      <div className="presupuesto__progress">
         <CircularProgressbar
           styles={buildStyles({
             pathColor: porcentaje > 100 ? '#DC2626' : '#3B82F6',
