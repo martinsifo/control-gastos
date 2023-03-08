@@ -1,24 +1,19 @@
-import { useState } from "react";
-import Mensaje from "./Mensaje";
+import { useState } from 'react';
+import Mensaje from './Mensaje';
 
-function NuevoPresupuesto({
-  presupuesto,
-  setPresupuesto,
-  setIsValidPresupuesto,
-  setFiltro,
-}) {
-  const [mensaje, setMensaje] = useState("");
+function NuevoPresupuesto({ presupuesto, setPresupuesto, setIsValidPresupuesto, setFiltro }) {
+  const [mensaje, setMensaje] = useState('');
 
   const handlePresupuesto = (e) => {
     e.preventDefault();
 
     if (!presupuesto || presupuesto < 0) {
-      setMensaje("no es un presupuesto valido");
+      setMensaje('no es un presupuesto valido');
       return;
     }
-    setMensaje("");
+    setMensaje('');
     setIsValidPresupuesto(true);
-    setFiltro("");
+    setFiltro('');
   };
 
   return (
